@@ -29,14 +29,24 @@ header a {
 }
 
 main {
-  max-width: 800px;
-  margin: auto;
+    max-width: 800px;
+    margin: auto;
 }
 
 .section {
-  margin-bottom: 0;
-  padding: 0 10px 5px 10px;
-  border-bottom: 2px solid #ddd;
+    margin-bottom: 0;
+    padding: 0 10px 5px 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+.section h3 {
+    padding-left: 10px;
+    margin-bottom: 0;
+}
+
+.section p {
+    margin-top: 5px;
+    padding-left: 20px;
 }
 
 /* ↓パンくず */
@@ -91,8 +101,52 @@ main {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     color: #00b140;
+}
+
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 16px;
+}
+
+.compare-table th,
+.compare-table td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+.compare-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+
+}
+
+.compare-table2 th {
+    width: 50%;
+}
+
+.compare-table3 th {
+    width: 33%;
+}
+
+.compare-table4 th {
+    width: 25%;
+}
+
+.code-spase {
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: monospace;
+    padding: 10px 0 10px 10px;
+    margin: 0 0 10px 20px;
 }
 
 .input-group {
@@ -574,7 +628,7 @@ button {
 }
 
 
-/* ↓メニュー */
+/* ↓メニュー 消去候補*/
 .nav-menu {
     display: none;
     position: fixed;
@@ -679,6 +733,10 @@ button {
     }
 }
 
+.menu a.sub {
+    padding: 5px 0px 5px 40px;
+}
+
 .links {
     text-align: center;
     width: 600px;
@@ -691,7 +749,7 @@ button {
     text-decoration: none;
     padding: 5px;
     margin: 20px auto;
-    border-radius: 5px;    
+    border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -700,26 +758,15 @@ button {
 }
 
 /* 目次 */
-.toc {
-    border: 2px solid #00b140;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    background: none;
-}
 
 .toc ul {
     list-style: none;
-    padding: 0;
+    padding-left: 10px;
 }
 
-.toc ul li {
-    margin: 5px 0;
-}
-
-.toc ul li a {
-    text-decoration: underline;
-    color: #007d3c;
+.toc a {
+    color: #1976D2;
+    text-decoration: none;
 }
 
 /* グリッド */
