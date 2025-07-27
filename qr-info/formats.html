@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL以外の読み込み形式 | BrandingQRcode</title>
+  <meta name="description" content="このWebアプリの目的や特徴を紹介します。無料でQRコードを作成できる便利なツールです。">
+
+  <!-- 共通JS,CSS -->
+  <script src="/assets/js/common.js"></script>
+  <script src="/assets/js/includes.js"></script>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+  <div data-include="/includes/header.html"></div>
+
+  <div class="background">
+    <main>
+
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <ol>
+          <li><a href="/">トップ</a></li>
+          <li><a href="/qr-info/index.html">QRコードについて</a></li>
+          <li>URL以外の読み込み形式</li>
+        </ol>
+      </nav>
+
+      <section class="section">
+        <h1>URL以外の読み込み形式</h1>
+        <p>
+          QRコードというと「WebサイトのURLを読み込むためのもの」と思われがちですが、実はそれだけではありません。<br>
+          QRコードにはURL以外の形式も数多く存在し、用途に応じて適切な形式を選ぶことで、より便利に使うことができます。<br>
+          この記事では、QRコードに関する基本的な仕組みと、URL以外でQRコードを作る代表的なパターンについて分かりやすく解説します。
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>目次</h2>
+        <ul class="toc" aria-label="ページ内目次">
+          <li><a href="#url-embed">QRコードにURLを埋め込む仕組み</a></li>
+          <li><a href="#non-url">URLを使わないQRコードの存在</a></li>
+          <li><a href="#non-url-patterns">URL以外でQRコードを作成するパターン</a>
+            <ul>
+              <li><a href="#wifi">（1）Wi-Fi接続用QRコード</a></li>
+              <li><a href="#line">（2）LINEの友だち追加・グループ招待</a></li>
+              <li><a href="#paypay">（3）PayPay送金用QRコード</a></li>
+            </ul>
+          </li>
+          <li><a href="#choose-format">QRコードの活用は目的に応じて形式を選ぶのがコツ</a></li>
+          <li><a href="#conclusion">おわりに</a></li>
+        </ul>
+      </section>
+
+      <section id="url-embed" class="section">
+        <h2>QRコードにURLを埋め込む仕組み</h2>
+        <p>
+          QRコードの最も一般的な使い方は、WebサイトやSNSのページなどのURLを埋め込むことです。<br>
+          QRコードを読み取ると、スマートフォンのブラウザがそのURLを開きます。
+        </p>
+        <h3>よく使われるURL形式の例</h3>
+        <table class="compare-table compare-table2">
+          <thead>
+            <tr>
+              <th>用途</th>
+              <th>埋め込むURLの例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Webページ</td>
+              <td>https://example.com</td>
+            </tr>
+            <tr>
+              <td>Instagramプロフィール</td>
+              <td>https://instagram.com/ユーザー名</td>
+            </tr>
+            <tr>
+              <td>Googleフォーム</td>
+              <td>https://forms.gle/XXXX</td>
+            </tr>
+            <tr>
+              <td>LINE友だち追加（個人）</td>
+              <td>https://line.me/ti/p/LINE_ID</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          このように、URLは「インターネット上の場所」を示す住所のようなものであり、QRコードはその住所を読み取って案内してくれる役割を持っています。
+        </p>
+      </section>
+
+      <section id="non-url" class="section">
+        <h2>URLを使わないQRコードの存在</h2>
+        <p>
+          QRコードというと、多くの人が「WebサイトのURLを読み取るもの」という印象を持っています。<br>
+          実際、広告やポスター、名刺などでよく使われるのは、URLを埋め込んで特定のWebページに誘導するタイプです。
+        </p>
+        <p>
+          しかし、<strong>QRコードの本質は「任意の文字列（テキストデータ）をエンコードできる点」</strong>にあります。<br>
+          つまり、URLに限らず、メールアドレス、電話番号、Wi-Fiの接続情報、決済用の識別子など、あらゆる情報を直接QRコードに埋め込むことができるのです。
+        </p>
+        <p>
+          たとえば、Wi-Fiの接続情報をQRコードにしておけば、スマートフォンで読み取るだけでネットワーク名やパスワードを入力することなく接続できます。<br>
+          LINEの友だち追加も、ユーザーIDや招待コードを埋め込んだQRを通じてスムーズに行うことが可能です。
+        </p>
+        <p>
+          こうした<strong>「URLを介さず、スマートフォンやアプリの機能を直接呼び出す用途」</strong>は、操作の手間を減らしたり、セキュリティ面の懸念を軽減したりできる利点があります。
+        </p>
+      </section>
+
+      <section id="non-url-patterns" class="section">
+        <h2>URL以外でQRコードを作成するパターン</h2>
+        <p>
+          以下は、URLを使わずにQRコードを作成する代表的なパターンです。
+        </p>
+
+        <h3 id="wifi">（1）Wi-Fi接続用QRコード</h3>
+        <p>
+          カフェや店舗などでよく見かける、スマホでスキャンするだけでWi-Fiに接続できるQRコードです。
+        </p>
+        <p>■ 形式（例）</p>
+        <p class="code-spase">
+          WIFI:S=MyCafeWiFi;T=WPA;P=coffee123;;
+        </p>
+        <p>■ 仕組み</p>
+        <p>
+          SSID（Wi-Fi名）、パスワード、セキュリティ方式を1つの文字列にまとめ、それをQRコードに変換します。
+          対応機種で読み取れば、入力なしで接続できます。
+        </p>
+
+        <h3 id="line">（2）LINEの友だち追加・グループ招待</h3>
+        <p>
+          LINEでは、URL形式も使えますが<strong>URLを自分で発行する必要がある</strong>ため、アプリ内操作が基本です。
+        </p>
+        <p>■ 個人LINE</p>
+        <p class="code-spase">
+          https://line.me/ti/p/あなたのLINE_ID
+        </p>
+        <p>■ グループ招待</p>
+        <p class="code-spase">
+          https://line.me/ti/g/xxxxxxxxxxxxxxxx
+        </p>
+        <p>■ 公式アカウント</p>
+        <p class="code-spase">
+          https://page.line.me/アカウントID
+        </p>
+
+        <p>■ 特徴</p>
+        <p>
+          URLを生成する手順が少し特殊で、アプリから共有する必要があります。
+          <strong>普段はURLを使わないが、QRコードで共有する需要が高い</strong>典型的な例です。
+        </p>
+
+        <h3 id="paypay">（3）PayPay送金用QRコード</h3>
+        <p>
+          個人や店舗がPayPayでの支払いを受け取るために使うQRコードです。<br>
+          アプリから送金用URLを発行し、それをQR化します。
+        </p>
+        <p>■ 形式（例）</p>
+        <p class="code-spase">
+          https://paypay.me/ユーザーID
+        </p>
+        <p>■ 仕組み</p>
+        <p>
+          自動でリンクが発行されるわけではないため、ユーザー自身がアプリでURLを生成する必要があります。<br>
+          URLは補助的であり、QRコードとして利用する場面が圧倒的に多いサービスです。
+        </p>
+      </section>
+
+      <section id="choose-format" class="section">
+        <h2>QRコードの活用は目的に応じて形式を選ぶのがコツ</h2>
+        <p>
+          QRコードは「URLを開くためのもの」と決めつけてしまいがちですが、今回紹介したように、スマホの機能と直接連携するような形式も存在します。
+        </p>
+        <table class="compare-table compare-table2">
+          <thead>
+            <tr>
+              <th>目的</th>
+              <th>向いている形式</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Webページへ誘導	</td>
+              <td>URL</td>
+            </tr>
+            <tr>
+              <td>Wi-Fiに自動接続	</td>
+              <td>Wi-Fi構文</td>
+            </tr>
+            <tr>
+              <td>連絡先を登録	</td>
+              <td>vCard構文</td>
+            </tr>
+            <tr>
+              <td>アプリ機能に誘導</td>
+              <td>特定アプリのURLスキーム</td>
+            </tr>
+            <tr>
+              <td>決済や友だち追加</td>
+              <td>PayPay / LINEの専用リンク</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="conclusion" class="section">
+        <h2>おわりに</h2>
+        <p>
+          QRコードは「情報を瞬時に届けるための入り口」です。
+          URLだけでなく、テキスト形式や専用構文を活用することで、<strong>印刷物やリアルな場面でよりスムーズな体験を提供できます。</strong><br>
+        </p>
+        <p>
+          今後QRコードを作成する際には、ぜひ「どんな目的で使うのか？」を意識して、最適な形式を選んでみてください。
+        </p>
+      </section>
+
+    </main>
+
+    <div data-include="/includes/links.html"></div>
+  </div>
+
+  <div data-include="/includes/footer.html"></div>
+</body>
+
+</html>

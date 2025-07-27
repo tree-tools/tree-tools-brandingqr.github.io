@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QRコード生成 | BrandingQRcode</title>
+
+  <meta name="description" content="簡単にQRコードを作成・カスタマイズ！ブランディングやデザインを重視する方に最適なツールです。">
+  <meta name="keywords" content="QRコード, QRコード作成, カスタマイズQR, ブランドQR, デザインQR, QRジェネレーター">
+  <meta name="author" content="BrandingQRcode">
+  <meta property="og:title" content="QRコード作成 | BrandingQRcode">
+  <meta property="og:description" content="デザインやブランディングを重視したQRコードを簡単に作成できます。">
+
+  <!-- 共通JS,CSS -->
+  <script src="/assets/js/common.js"></script>
+  <script src="/assets/js/includes.js"></script>
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!-- QRコード用JS -->
+  <script src="/assets/js/qr-reader.js" defer></script>
+  <!--   カスタマイズ可能なQRコード生成ライブラリ -->
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling/lib/qr-code-styling.js"></script>
+  <!--   文字列を圧縮・展開するためのライブラリ（特にURL埋め込み用） -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+  <!--   画像をブラウザ上でクロップ（切り抜き）できるライブラリ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <!--   Cropper.js 用のスタイルシート（クロップ枠などのUI表示用） -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div data-include="/includes/header.html"></div>
+
+  <div class="background">
+    <div class="main-content">
+      <h1>QRコードを作成しよう！</h1>
+      <div class="input-group">
+        <div class="input-button-container">
+          <input type="text" id="data" value="https://example.com" placeholder="URLを入力">
+          <button class="clear-button" onclick="clearInput()">URLをクリア</button>
+        </div>
+        <button class="clear-button" onclick="togglePopup(getEle('settingsPopup'), true)">画像の詳細設定</button><br>
+        <button class="generate-button" onclick="generateQRCode()">QRコード生成</button>
+        <span id="errorMessage"></span>
+      </div>
+
+      <!-- 詳細設定のポップアップ -->
+      <div id="settingsPopup" class="popup hidden">
+        <div class="popup-content">
+          <button class="close-btn" onclick="togglePopup(getEle('settingsPopup'), false)">×</button>
+          <h2>画像の詳細設定</h2>
+          <!-- タブ -->
+          <div class="tabs">
+            <div class="tab active" onclick="switchTab(0)">デザイン</div>
+            <div class="tab" onclick="switchTab(1)">ロゴ</div>
+            <div class="tab" onclick="switchTab(2)">タイトル</div>
+          </div>
+          <div class="popup-scroll">
+            <!-- デザインフォーム -->
+            <div class="form-container active" id="designForm">
+              <div class="details-content">
+                <div class="form-group">
+                  <label for="size">サイズ</label>
+                  <input type="number" id="size" min="50" max="500" step="10">
+                </div>
+              </div>
+              <div class="details-content details-area">
+                <div class="form-group">
+                  <label for="dotColor">ドット色</label>
+                  <input type="color" id="dotColor">
+                </div>
+                <div class="form-group">
+                  <p>
+                    <label for="gradient">
+                      <input type="checkbox" id="gradient">グラデーションを適用 ▼
+                    </label>
+                  </p>
+                </div>
+              </div>
+              <div class="details-content details-area sub-details" id="gradient-area">
+                <div class="form-group">
+                  <label for="gradEnd">ドット色2</label>
+                  <input type="color" id="gradEnd">
+                  <div id="patternCanvas" class="patternCanvas"></div>
+                </div>
+                <div class="form-group">
+                  <label for="gradientType">塗りつぶし形状</label>
+                  <select id="gradientType">
+                    <option value="linear">線形</option>
+                    <option value="radial">円形</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="rotation">角度（線形のみ）</label>
+                  <input type="number" id="rotation" step="15">
+                </div>
+              </div>
+              <div class="details-content">
+                <div class="form-group">
+                  <label for="dotShape">ドット形状</label>
+                  <select id="dotShape">
+                    <option value="square">通常の四角形</option>
+                    <!-- <option value="rounded">少し角を丸めた四角形</option> -->
+                    <option value="extra-rounded">さらに角を丸めた四角形</option>
+                    <option value="dots">丸いドット</option>
+                    <option value="classy">曲線が入り滑らかに繋がるデザイン</option>
+                    <!-- <option value="classy-rounded">より柔らかく丸みを強調したデザイン</option> -->
+                  </select>
+                </div>
+              </div>
+              <div class="details-content details-area">
+                <div class="form-group" id="bgColorLabel">
+                  <label for="bgColor">背景</label>
+                  <div>
+                    <div id="bgColor-area">
+                      <input type="color" id="bgColor">
+                    </div>
+                    <label><input type="checkbox" id="transparentBg" class="selectCheck">背景透過</label>
+                  </div>
+                </div>
+              </div>
+              <div class="details-content">
+                <div class="form-group">
+                  <label for="margin">余白(px)</label>
+                  <input type="number" id="margin">
+                </div>
+              </div>
+              <div class="details-content details-area">
+                <div class="form-group">
+                  <label for="errorLevel">耐久レベル</label>
+                  <select id="errorLevel">
+                    <option value="L">L（壊れやすいがデータ量が多い）</option>
+                    <option value="M">M（バランスが良い）</option>
+                    <option value="Q">Q（少し壊れても読める）</option>
+                    <option value="H">H（耐久力があるがデータ量が少ない）</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- ロゴフォーム -->
+            <div class="form-container" id="logoForm">
+              <div class="details-content">
+                <div class="form-group">
+                  <label for="addLogo">ロゴの種類を選択</label>
+                  <select id="addLogo" onchange="changeLogoType()">
+                    <option value="0">ロゴ無し</option>
+                    <option value="tx">テキスト</option>
+                    <option value="im">画像</option>
+                  </select>
+                </div>
+              </div>
+              <div class="details-content">
+                <div class="tabs">
+                  <div class="logo-tab" onclick="switchTab2(0)">テキスト</div>
+                  <div class="logo-tab" onclick="switchTab2(1)">画像</div>
+                </div>
+              </div>
+              <!-- テキスト表示 -->
+              <div class="logo-container">
+                <div id="logoTextArea">
+                  <div class="details-content details-area sub-details">
+                    <div class="form-group">
+                      <label for="logoText">ロゴ文字</label>
+                      <textarea id="logoText" rows="3" placeholder="ロゴに表示する文字を入力"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="logoSize">ロゴサイズ(px)</label>
+                      <input type="number" id="logoSize">
+                    </div>
+                    <div class="form-group">
+                      <label for="logoFontFamily">フォント</label>
+                      <select id="logoFontFamily" onchange="changeFont('logoFontFamily')" class="f-m">
+                        <option value="m" class="f-m">メイリオ</option>
+                        <option value="yg" class="f-yg">游ゴシック</option>
+                        <option value="pg" class="f-pg">MS Pゴシック</option>
+                        <option value="pm" class="f-pm">MS P明朝</option>
+                        <option value="hk" class="f-hk">ヒラギノ角ゴ</option>
+                        <option value="hm" class="f-hm">ヒラギノ明朝</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="logoLineHeight">行間</label>
+                      <input type="number" id="logoLineHeight" placeholder="行間" min="0" max="10" step="0.1">
+                    </div>
+                    <div class="form-group">
+                      <label for="logoColor">ロゴの色</label>
+                      <div>
+                        <div>
+                          <input type="color" id="logoColor" disabled>
+                        </div>
+                        <label><input type="checkbox" id="selectLc" class="selectCheck">ドットと同じ色にする</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 共通表示 -->
+                <div class="details-content">
+                  <div class="form-group" id="logoErrorLevelLavel">
+                    <label for="logoErrorLevel">耐久レベル</label>
+                    <p id="logoErrorLevel">H（耐久力があるが<br>データ量が少ない）</p>
+                  </div>
+                </div>
+              </div>
+              <!-- 画像表示 -->
+              <div class="logo-container">
+                <div class="details-content details-area" id="logoImageArea">
+                  <div class="form-group">
+                    <label for="logoImage">画像を挿入</label>
+                    <input type="file" id="logoImage" accept="image/*">
+                  </div>
+                  <div class="preview-content">
+                    <img id="preview"> <!-- プレビュー画面 -->
+                    <button id="cropButton">ロゴ作成</button>
+                    <canvas id="croppedCanvas"></canvas>
+                    <div id="qrCode"></div>
+                  </div>
+                </div>
+                <!-- 共通表示 -->
+                <div class="details-content">
+                  <div class="form-group" id="logoErrorLevelLavel">
+                    <label for="logoErrorLevel">耐久レベル</label>
+                    <p id="logoErrorLevel">H（耐久力があるが<br>データ量が少ない）</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- タイトルフォーム -->
+            <div class="form-container" id="titleForm">
+              <div class="details-content">
+                <div class="form-group">
+                  <p>
+                    <label for="addTitle">
+                      <input type="checkbox" id="addTitle"> タイトルを適用 ▼
+                    </label>
+                  </p>
+                </div>
+              </div>
+              <div class="details-content details-area sub-details" id="title-area">
+                <div class="form-group">
+                  <label for="titleText">タイトル</label>
+                  <textarea id="titleText" rows="3" placeholder="タイトルを入力"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="titleSize">タイトルサイズ(px)</label>
+                  <input type="number" id="titleSize" min="10" max="50">
+                </div>
+                <div class="form-group">
+                  <label for="titleFontFamily">フォント</label>
+                  <select id="titleFontFamily" onchange="changeFont('titleFontFamily')" class="f-m">
+                    <option value="m" class="f-m">メイリオ</option>
+                    <option value="yg" class="f-yg">游ゴシック</option>
+                    <option value="pg" class="f-pg">MS Pゴシック</option>
+                    <option value="pm" class="f-pm">MS P明朝</option>
+                    <option value="hk" class="f-hk">ヒラギノ角ゴ</option>
+                    <option value="hm" class="f-hm">ヒラギノ明朝</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="titleLineHeight">行間</label>
+                  <input type="number" id="titleLineHeight" placeholder="行間" min="0" max="10" step="0.1">
+                </div>
+                <div class="form-group">
+                  <label for="titleColor">タイトルの色</label>
+                  <input type="color" id="titleColor">
+                </div>
+              </div>
+            </div>
+          </div>
+          <button onclick="clearDetails()" class="clear-button">詳細条件をクリア</button>
+          <button class="generate-button" onclick="generateQRCode()">QRコード生成</button>
+        </div>
+      </div>
+
+      <div id="qr-preview">QRコードがここに表示されます</div>
+      <div id="qrContainer">
+        <img id="qrCodeImage" class="qr-code" alt="QRコード">
+        <button class="generate-button" onclick="zoomQRCode()">QRコードを拡大</button>
+        <button class="reset-button" onclick="resetAll()">全てリセット</button>
+        <div id="result"></div>
+      </div>
+    </div>
+
+    <div data-include="/includes/links.html"></div>
+  </div>
+
+  <div class="popup hidden" id="popup" onclick="togglePopup(getEle('popup'), false)">
+    <img id="popupImage" alt="拡大QRコード">
+  </div>
+
+  <div data-include="/includes/footer.html"></div>
+
+</body>
+
+</html>
