@@ -57,10 +57,8 @@ function switchTab(index) {
 
 // tabの切り替え2
 function switchTab2(index) {
-  const logoTabs = [...document.querySelectorAll(".logo-tab")];
   const container = [...document.querySelectorAll(".logo-container")];
 
-  logoTabs.forEach((tab, i) => tab.classList.toggle("active", i === index));
   container.forEach((form, i) => form.classList.toggle("active", i === index));
 }
 
@@ -77,9 +75,12 @@ function changeLogoType() {
   }
 
   if (addLogo.value === "tx") {
-    switchTab2(0);
-  } else if (addLogo.value === "im") {
     switchTab2(1);
+  } else if (addLogo.value === "im") {
+    switchTab2(2);
+  } else{
+
+    switchTab2(0);
   }
 }
 
@@ -586,8 +587,7 @@ function setUrlParams() {
   window.history.pushState(null, "", newUrl); // GASじゃ動かない
 
   // クエリ文字列を作成
-  const queryString = params.toString()
-  const response = window.location.href + queryString // GASじゃ動かない
+  const response = window.location.href // GASじゃ動かない
 
   updateURL(response); // GASじゃ動かない
 }

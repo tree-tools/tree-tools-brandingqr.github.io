@@ -38,7 +38,7 @@
       <h1>QRコードを作成しよう！</h1>
       <div class="input-group">
         <div class="input-button-container">
-          <input type="text" id="data" value="https://example.com" placeholder="URLを入力">
+          <input type="text" id="data" value="https://tree-tools-brandingqr.pages.dev/" placeholder="URLを入力">
           <button class="clear-button" onclick="clearInput()">URLをクリア</button>
         </div>
         <button class="clear-button" onclick="togglePopup(getEle('settingsPopup'), true)">画像の詳細設定</button><br>
@@ -152,12 +152,11 @@
                   </select>
                 </div>
               </div>
-              <div class="details-content">
-                <div class="tabs">
-                  <div class="logo-tab" onclick="switchTab2(0)">テキスト</div>
-                  <div class="logo-tab" onclick="switchTab2(1)">画像</div>
-                </div>
+
+              <!-- ロゴ無し -->
+              <div class="logo-container">
               </div>
+
               <!-- テキスト表示 -->
               <div class="logo-container">
                 <div id="logoTextArea">
