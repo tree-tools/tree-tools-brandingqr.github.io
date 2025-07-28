@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tree-tools-brandingqr.pages.dev/sitemap.xml
