@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>QRコード作成フォーム</title>
+
+  <style>
+    .typeSelect {
+      font-size: 20px;
+    }
+  </style>
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+
+  <div class="background">
+    <div class="main-content">
+      <h1>QRコード作成</h1>
+
+      <div class="input-group">
+        <!-- URLかを選択 -->
+        <div class="typeSelect">
+          <label>
+            <input type="radio" name="typeSelect" value="url" checked>
+            URL
+          </label>
+          <label>
+            <input type="radio" name="typeSelect" value="custom">
+            URL以外
+          </label>
+        </div>
+        <!-- URL以外の詳細形式 -->
+        <div class="form-group hidden" id="customTypeGroup">
+          <label for="customTypeSelect">詳細形式</label>
+          <select id="customTypeSelect">
+            <option value="">--選択してください--</option>
+            <option value="line">LINE（個人・グループ・公式）</option>
+            <option value="wifi">Wi-Fi接続</option>
+            <option value="paypay">PayPay送金</option>
+          </select>
+        </div>
+        <!-- URL形式入力 -->
+        <div class="input-group-url">
+          <div class="input-button-container" id="urlInputGroup">
+            <label for="urlInput">URLを入力</label>
+            <input type="text" id="urlInput" value="https://tree-tools-brandingqr.pages.dev/" placeholder="URLを入力">
+          </div>
+        </div>
+        <!-- LINE用入力 -->
+        <div class="input-group-url hidden" id="lineInputGroup">
+          <div class="form-group">
+            <label for="lineType">LINEの種類</label>
+            <select id="lineType">
+              <option value="person">個人（LINE ID）</option>
+              <option value="group">グループ（招待リンク）</option>
+              <option value="official">公式アカウント</option>
+            </select>
+          </div>
+          <div class="input-button-container">
+            <label for="lineId">LINE ID</label>
+            <input type="text" id="lineId" placeholder="例：name123">
+          </div>
+        </div>
+        <!-- Wi-Fi用入力 -->
+        <div class="input-group-url hidden" id="wifiInputGroup">
+          <div class="input-button-container">
+            <label>SSID：</label>
+            <input type="text" id="wifiSsid">
+          </div>
+          <div class="input-button-container">
+            <label>パスワード</label>
+            <input type="text" id="wifiPass">
+          </div>
+          <div class="form-group">
+            <label>セキュリティ</label>
+            <select id="wifiSecurity">
+              <option value="WPA">WPA/WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">なし</option>
+            </select>
+          </div>
+        </div>
+        <!-- PayPay用入力 -->
+        <div class="input-group-url hidden" id="paypayInputGroup">
+          <div class="input-button-container">
+            <label for="paypayId">PayPay ID</label>
+            <input type="text" id="paypayId" placeholder="例：name123">
+          </div>
+        </div>
+
+        <button onclick="generate()">生成</button>
+
+        <div id="output" class="hidden">
+          生成された文字列：<br>
+          <code id="resultText"></code>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <script>
+    const customTypeGroup = document.getElementById('customTypeGroup');
+    const customTypeSelect = document.getElementById('customTypeSelect');
+    const urlInputGroup = document.getElementById('urlInputGroup');
+
+    const lineInputGroup = document.getElementById('lineInputGroup');
+    const wifiInputGroup = document.getElementById('wifiInputGroup');
+    const paypayInputGroup = document.getElementById('paypayInputGroup');
+
+    const output = document.getElementById('output');
+    const resultText = document.getElementById('resultText');
+
+    // ラジオボタンにイベントを追加
+    const typeRadios = document.querySelectorAll('input[name="typeSelect"]');
+    typeRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        const isCustom = radio.value === 'custom';
+        customTypeGroup.classList.toggle('hidden', !isCustom);
+        urlInputGroup.classList.toggle('hidden', isCustom);
+        if (!isCustom) {
+          lineInputGroup.classList.add('hidden');
+          wifiInputGroup.classList.add('hidden');
+          paypayInputGroup.classList.add('hidden');
+        }
+      });
+    });
+
+    // カスタム形式の詳細変更イベント
+    customTypeSelect.addEventListener('change', () => {
+      lineInputGroup.classList.add('hidden');
+      wifiInputGroup.classList.add('hidden');
+      paypayInputGroup.classList.add('hidden');
+      if (customTypeSelect.value === 'line') lineInputGroup.classList.remove('hidden');
+      if (customTypeSelect.value === 'wifi') wifiInputGroup.classList.remove('hidden');
+      if (customTypeSelect.value === 'paypay') paypayInputGroup.classList.remove('hidden');
+    });
+
+
+
+    // 生成処理
+    function generate() {
+      let result = '';
+      const selectedType = document.querySelector('input[name="typeSelect"]:checked').value;
+
+      if (selectedType === 'url') {
+        result = document.getElementById('urlInput').value.trim();
+      } else {
+        const customType = customTypeSelect.value;
+        if (customType === 'line') {
+          const lineType = document.getElementById('lineType').value;
+          const id = document.getElementById('lineId').value.trim();
+          if (lineType === 'person') result = `https://line.me/ti/p/${id}`;
+          if (lineType === 'group') result = id;
+          if (lineType === 'official') result = `https://page.line.me/${id}`;
+        } else if (customType === 'wifi') {
+          const ssid = document.getElementById('wifiSsid').value;
+          const pass = document.getElementById('wifiPass').value;
+          const sec = document.getElementById('wifiSecurity').value;
+          result = `WIFI:S=${ssid};T=${sec};P=${pass};;`;
+        } else if (customType === 'paypay') {
+          const paypayId = document.getElementById('paypayId').value.trim();
+          result = `https://paypay.me/${paypayId}`;
+        }
+      }
+
+      // resultをdataに入れる
+
+      if (result) {
+        output.classList.remove('hidden');
+        resultText.textContent = result;
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>

@@ -156,7 +156,7 @@ getEle("selectLc").addEventListener('change', function () {
 });
 syncColor()
 
-// URLのクリアボタン
+// URLのクリアボタン ←URL箇所の変更★
 function clearInput() {
   getEle("data").value = "";
 }
@@ -200,7 +200,7 @@ function clearDetails() {
 function resetAll() {
   history.replaceState(null, "", location.pathname);
   clearDetails();
-  getEle("data").value = "https://example.com";
+  getEle("data").value = "https://tree-tools-brandingqr.pages.dev/";
   getEle("qrContainer").style.display = "none";
 
   // location.reload();
@@ -225,7 +225,7 @@ function toggleElement(checkboxId, areaId, inverse = false) {
   updateDisplay();
 }
 
-// 各要素の統合オブジェクト
+// 各要素の統合オブジェクト ←URL要素を追加★
 const dataMap = {
   size: { k: "s", val: null, def: "300" },
   dotColor: { k: "dc", val: null, def: "#000000", pre: "#" },

@@ -37,11 +37,17 @@
     <div class="main-content">
       <h1>QRコードを作成しよう！</h1>
       <div class="input-group">
+
+
+
+        
         <div class="input-button-container">
           <input type="text" id="data" value="https://tree-tools-brandingqr.pages.dev/" placeholder="URLを入力">
-          <button class="clear-button" onclick="clearInput()">URLをクリア</button>
         </div>
-        <button class="clear-button" onclick="togglePopup(getEle('settingsPopup'), true)">画像の詳細設定</button><br>
+        
+          <button class="clear-button" onclick="clearInput()">URLをクリア</button>
+
+        <button class="clear-button" onclick="togglePopup(getEle('settingsPopup'), true)">画像の詳細設定</button>
         <button class="generate-button" onclick="generateQRCode()">QRコード生成</button>
         <span id="errorMessage"></span>
       </div>

@@ -154,19 +154,30 @@ h3 {
 }
 
 .input-button-container {
+    position: relative;
+    max-width: 500px;
     display: flex;
-    max-width: 600px;
-    width: 100%;
-    margin-bottom: 20px;
+
+    padding: 8px 20px;
+    margin: 0 auto;
 }
 
 .input-button-container input {
     flex: 1;
+
     padding: 10px;
     margin-right: 10px;
     max-width: 500px;
     font-size: 16px;
     border: 1px solid #ccc;
+}
+
+.input-button-container label {
+    width: 150px;
+    text-align: left;
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 .details-content {
@@ -560,14 +571,14 @@ button {
 
     .input-button-container {
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
     }
 
     .input-button-container input {
         max-width: none;
         width: 95%;
+        margin-left: 20px;
         margin-right: 0;
-        margin-bottom: 20px;
     }
 
     .form-group {
