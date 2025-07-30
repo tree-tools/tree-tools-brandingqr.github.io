@@ -180,6 +180,10 @@ h3 {
     margin-left: 20px;
 }
 
+.typeSelect {
+      font-size: 20px;
+    }
+
 .details-content {
     width: 100%;
 }
@@ -302,7 +306,7 @@ button {
 
 #errorMessage {
     color: red;
-    margin-top: 5px;
+    margin: 0 auto 10px auto;
 }
 
 #fixImageArea {
