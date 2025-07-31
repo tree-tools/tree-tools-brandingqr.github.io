@@ -112,7 +112,7 @@ function urlGenerate() {
           lineType === 'group' ? id :
             lineType === 'official' ? `https://page.line.me/${id}` : '';
       } else {
-        errorMessage = "IDを入力してください";
+        c = "IDを入力してください";
       }
     } else if (customType === 'wifi') { // Wi-Fi パラメータ wifi
       const ssid = getEle('wifiSsid').value;
@@ -380,7 +380,7 @@ function generateQRCode() {
     getEle("errorMessage").textContent = urlGenerate().errorMessage;
     getEle("qrCodeImage").src = "";
     getEle("qrContainer").style.display = "none";
-    getEle("qr-preview").style.display = "block";
+    getEle("qr-preview").style.display = "flex";
 
     return;
   }
