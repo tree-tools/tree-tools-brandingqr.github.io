@@ -26,7 +26,40 @@ logoImage.addEventListener('change', (event) => {
   }
 });
 
-cropButton.addEventListener('click', () => {
+// 画像アップロードの承認
+const cropBtn = document.getElementById("cropButton");
+const modal = document.getElementById("termsModal");
+const agreeBtn = document.getElementById("agreeBtn");
+const closeBtn = document.getElementById("closeModalBtn");
+
+let AGREED_KEY = "agreedToTerms";
+
+// 初回クリック時にポップアップ表示
+cropBtn.addEventListener("click", () => {
+  console.log(AGREED_KEY);
+  if (AGREED_KEY === "true") {
+    console.log("承認済み");
+    proceedWithLogoCreation(); // 利用規約同意済みなら処理実行
+  } else {
+    modal.style.display = "flex";
+  }
+});
+
+// 同意する → 処理実行
+agreeBtn.addEventListener("click", () => {
+  AGREED_KEY = "true";
+  modal.style.display = "none";
+  proceedWithLogoCreation();
+});
+
+// キャンセル → 閉じる
+closeBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+
+function proceedWithLogoCreation() {
+
   const croppedCanvas = getEle('croppedCanvas');
   const croppedImage = cropper.getCroppedCanvas();
   croppedImageBase64 = croppedImage.toDataURL();
@@ -44,7 +77,10 @@ cropButton.addEventListener('click', () => {
 
   document.getElementById("qrCode").innerHTML = "";
   qrCode.append(document.getElementById("qrCode"));
-});
+
+  // alert("ロゴを生成しました！");
+}
+
 
 
 // URL入力の切り替え
@@ -92,7 +128,7 @@ customTypeSelect.addEventListener('change', () => {
   getEle("errorMessage").textContent = "";
 });
 
-// 生成処理
+// URL生成処理
 function urlGenerate() {
   let result = '';
   let errorMessage = '';
@@ -134,7 +170,6 @@ function urlGenerate() {
       errorMessage = "詳細形式を選択してください";
     }
   }
-  console.log(result);
   if (errorMessage != '') { console.log(errorMessage); }
 
   return { data: result, errorMessage: errorMessage };
@@ -282,23 +317,43 @@ function zoomQRCode() {
   togglePopup(getEle("popup"), true);
 }
 
+// 詳細をクリア
 function clearDetails() {
-  document.querySelectorAll(":is(input, select, textarea)").forEach((el) => {
-    if (el.type === "checkbox") {
-      el.checked = el.defaultChecked;
-    } else if (el.tagName === "SELECT") {
-      // デフォルト選択されたオプションを探して設定
-      const defaultOption = Array.from(el.options).find(opt => opt.defaultSelected);
-      el.value = defaultOption ? defaultOption.value : el.dataset.defaultValue ?? el.defaultValue;
-    } else {
-      el.value = el.dataset.defaultValue ?? el.defaultValue;
-    }
+  // データマップのvalをデフォに更新
+  Object.values(dataMap).forEach(item => {
+    item.val = null;
   });
+
+  // データマップの値をインプットに入れる
+  populateInputsFromDataMap();
 
   updateSectionVisibility();
   history.replaceState({}, "", location.pathname);
-  generateQRCode();
+
+  generateQRCode('lode');
+
+  togglePopup(getEle('settingsPopup'), false)
 }
+
+
+// function clearDetails() {
+//   document.querySelectorAll(":is(input, select, textarea)").forEach((el) => {
+//     if (el.type === "checkbox") {
+//       el.checked = el.defaultChecked;
+//     } else if (el.tagName === "SELECT") {
+//       // デフォルト選択されたオプションを探して設定
+//       const defaultOption = Array.from(el.options).find(opt => opt.defaultSelected);
+//       el.value = defaultOption ? defaultOption.value : el.dataset.defaultValue ?? el.defaultValue;
+//     } else {
+//       el.value = el.dataset.defaultValue ?? el.defaultValue;
+//     }
+//   });
+
+//   updateSectionVisibility();
+//   history.replaceState({}, "", location.pathname);
+
+//   generateQRCode('lode');
+// }
 
 // URLのクエリパラメータを削除してページをリロード
 function resetAll() {
@@ -312,21 +367,23 @@ function resetAll() {
 
 // 各セクションの表示・非表示を更新
 function updateSectionVisibility() {
-  Object.entries({
-    "gradient-area": "gradient",
-    "title-area": "addTitle",
-    "bgColor-area": "transparentBg"
-  }).forEach(([areaId, checkboxId]) => toggleElement(checkboxId, areaId));
-}
+  const rules = [
+    { areaId: "gradient-area", checkboxId: "gradient", showWhen: true },
+    { areaId: "title-area", checkboxId: "addTitle", showWhen: true },
+    { areaId: "bgColor-area", checkboxId: "transparentBg", showWhen: false }
+  ];
 
-function toggleElement(checkboxId, areaId, inverse = false) {
-  const checkbox = getEle(checkboxId);
-  const area = getEle(areaId);
+  rules.forEach(({ areaId, checkboxId, showWhen }) => {
+    const checkbox = getEle(checkboxId);
+    const area = getEle(areaId);
 
-  const updateDisplay = () => area.style.display = (inverse !== checkbox.checked) ? "block" : "none";
+    const updateDisplay = () => {
+      area.style.display = (checkbox.checked === showWhen) ? "block" : "none";
+    };
 
-  checkbox.addEventListener("change", updateDisplay);
-  updateDisplay();
+    checkbox.addEventListener("change", updateDisplay);
+    updateDisplay();
+  });
 }
 
 // 各要素の統合オブジェクト ←URL要素を追加★
@@ -370,20 +427,43 @@ function getDataMapVal(key) {
   return value;
 }
 
-// QRコードを作成
-function generateQRCode() {
-  // const data = getEle("data").value.trim(); //URL
 
+// 各種QRコード作成の導入
+function generateQRCode(type) {
+
+  if (type === "sample") {
+    const data = "https://tree-tools-brandingqr.pages.dev/"
+    // QRコードを作成
+    generateDataToQRCode(data);
+    return
+  }
+
+  // 引数にURLが無い場合は取得する
   const data = urlGenerate().data;
 
-  if (!data) {
-    getEle("errorMessage").textContent = urlGenerate().errorMessage;
-    getEle("qrCodeImage").src = "";
-    getEle("qrContainer").style.display = "none";
-    getEle("qr-preview").style.display = "flex";
-
-    return;
+  if (data) {
+    // QRコードを作成
+    generateDataToQRCode(data);
+    return
   }
+
+  // データが無い場合
+  getEle("qrCodeImage").src = "";
+  getEle("qrContainer").style.display = "none";
+  getEle("qr-preview").style.display = "flex";
+  getEle("errorMessage").textContent = "";
+  getEle("detailErrorMessage").textContent = "";
+
+  if (type === "top") {
+    getEle("errorMessage").textContent = urlGenerate().errorMessage;
+  } else if (type === "detail") {
+    getEle("detailErrorMessage").textContent = urlGenerate().errorMessage;
+  }
+
+}
+
+// URLを入れてQRコードを作成
+function generateDataToQRCode(data) {
 
   // インプットをデータマップに入れる関数
   updateDataMapFromInputs()
@@ -715,7 +795,7 @@ window.onload = function () {
   // QRコード生成
   const params = getQueryParams();
   if (params.toString()) {
-    generateQRCode();
+    generateQRCode('lode');
   }
 
   // グラデーションパターンの角度
