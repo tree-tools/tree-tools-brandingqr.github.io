@@ -181,8 +181,8 @@ h3 {
 }
 
 .typeSelect {
-      font-size: 20px;
-    }
+    font-size: 20px;
+}
 
 .details-content {
     width: 100%;
@@ -275,10 +275,11 @@ button {
     margin-top: 5px;
     background: linear-gradient(135deg, #00b140, #ffd700);
     color: white;
-    border: 2px solid #00b140;
+    border: 2px solid white;
 }
 
 .generate-button:hover {
+    /* background: linear-gradient(-45deg, #00b140, #ffd700); */
     background: white;
     color: #00b140;
     border: 2px solid #00b140;
@@ -297,6 +298,7 @@ button {
 .clear-details-button:hover {
     background: linear-gradient(135deg, #00b140, #ffd700);
     color: white;
+    border: 2px solid white;
 }
 
 .qr-code {
@@ -305,6 +307,11 @@ button {
 }
 
 #errorMessage {
+    color: red;
+    margin: 0 auto 10px auto;
+}
+
+#detailErrorMessage {
     color: red;
     margin: 0 auto 10px auto;
 }
@@ -384,6 +391,36 @@ button {
     font-size: 30px;
     cursor: pointer;
 }
+
+/* 利用規約 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    max-width: 500px;
+    width: 90%;
+    border-radius: 8px;
+}
+
+.terms-text {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
 
 /* タブ　*/
 .tabs {
@@ -775,7 +812,7 @@ button {
 
 .grid-item {
     text-align: center;
-    background: #fff;
+    background: #eee;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -787,9 +824,29 @@ button {
     border-radius: 5px;
 }
 
+.grid-item h3 {
+    margin: 10px 0;
+}
+
 .grid-item p {
     margin: 10px 0;
     font-weight: bold;
+    text-align: left;
+}
+
+.grid-item a {
+    padding: 10px 20px;
+    background: #00b140;
+    color: #fff;
+    border-radius: 5px;
+    border: 2px solid #eee;
+    text-decoration: none;
+}
+
+.grid-item a:hover {
+    background: #fff;
+    color: #00b140;
+    border: 2px solid #00b140;
 }
 
 .cta {

@@ -22,38 +22,99 @@
       <nav class="breadcrumb" aria-label="パンくずリスト">
         <ol>
           <li><a href="/">トップ</a></li>
-          <li><a href="/guide/index.html">サイトの使い方</a></li>          
+          <li><a href="/guide/index.html">サイトの使い方</a></li>
           <li>デザイン例</li>
         </ol>
       </nav>
 
       <h1>デザイン例</h1>
 
-
       <p>QRコードはデザインをカスタマイズすることで、ブランディングや視認性を向上させることができます。</p>
 
       <div class="grid">
         <div class="grid-item">
-          <img src="sample1.png" alt="グラデーションQRコード">
-          <p>グラデーション＋ロゴ</p>
-          <a href="qr-generator.html?color1=FF5733&color2=33FF57&logo=yes" class="button">このデザインを作る</a>
+          <h3>シンプルなカラーカスタム</h3>
+          <img src="/assets/images/design-qr/simple.png" alt="シンプルなカラーカスタムQRコード">
+          <p>
+            デザイン：単色の変更<br>
+            ドット色：グリーン（#009E60）<br>
+            背景色：ホワイト（#FFFFFF）
+          </p>
+          <a href="https://tree-tools-brandingqr.pages.dev/?dc=009e60">このデザインを作る</a>
         </div>
         <div class="grid-item">
-          <img src="sample2.png" alt="背景透過QRコード">
-          <p>背景透過＋ドット変更</p>
-          <a href="qr-generator.html?background=transparent&dots=round" class="button">このデザインを作る</a>
+          <h3>グラデーションQRコード</h3>
+          <img src="/assets/images/design-qr/gradation.png" alt="グラデーションQRコード">
+          <p>
+            デザイン：グラデーション（左から右へ）<br>
+            開始色：ブルー（#007AFF）<br>
+            終了色：パープル（#8E44AD）<br>
+            背景色：ホワイト（#FFFFFF）
+          </p>
+          <a href="https://tree-tools-brandingqr.pages.dev/?dc=007aff&ig=1&gc=8e44ad&gr=0">このデザインを作る</a>
         </div>
         <div class="grid-item">
-          <img src="sample3.png" alt="カスタムカラQRコード">
-          <p>カスタムカラー</p>
-          <a href="qr-generator.html?color=123456" class="button">このデザインを作る</a>
+          <h3>透過背景QRコード</h3>
+          <img src="/assets/images/design-qr/transparent.png" alt="透過背景QRコード">
+          <p>
+            デザイン：背景透過 <br>
+            ドット色：ブラック（#000000）<br>
+            背景色：なし（透過PNG）
+          </p>
+          <a href="https://tree-tools-brandingqr.pages.dev/?tb=1">このデザインを作る</a>
+        </div>
+        <div class="grid-item">
+          <h3>ドット形状変更（丸型）</h3>
+          <img src="/assets/images/design-qr/round-dots.png" alt="ドット形状変更（丸型）">
+          <p>
+            デザイン：ドットを丸型に変更<br>
+            ドット色：オレンジ（#FF5733）<br>
+            背景色：ホワイト（#FFFFFF）
+          </p>
+          <a href="https://tree-tools-brandingqr.pages.dev/?dc=ff5733&ds=dots">このデザインを作る</a>
+        </div>
+        <div class="grid-item">
+          <h3>テキストロゴ付きQRコード</h3>
+          <img src="/assets/images/design-qr/scan-me.png" alt="テキストロゴ付きQRコード">
+          <p>
+            デザイン：QRコードの下にテキスト<br>
+            QRコード：ブラック（#000000）<br>
+            背景色：ホワイト（#FFFFFF）<br>
+            テキスト：「SCAN ME」（#FF0000）
+          </p>
+          <a
+            href="https://tree-tools-brandingqr.pages.dev/?e=H&al=tx&lt=SCAN%2520ME&ls=19&lf=pg&lh=1.1&lc=000000">このデザインを作る</a>
+        </div>
+        <div class="grid-item">
+          <h3>画像ロゴ付きQRコード</h3>
+          <img src="/assets/images/design-qr/camera-logo.png" alt="画像ロゴ付きQRコード">
+          <p>
+            デザイン：中央にロゴを挿入<br>
+            QRコード：ブラック（#000000）<br>
+            背景色：ホワイト（#FFFFFF）<br>
+            ロゴ：シンプルなカメラアイコン（#007AFF）
+          </p>
+          <p>※画像挿入の場合は、設定を保存したURLが作成されません。</p>
+        </div>
+        <div class="grid-item">
+          <h3>QRコード下にタイトルを配置</h3>
+          <img src="/assets/images/design-qr/title.png" alt="QRコード下にタイトルを配置">
+          <p>
+            デザイン：QRコードの下にタイトルを追加<br>
+            QRコード：ブラック（#000000）<br>
+            背景色：ホワイト（#FFFFFF）
+          </p>
+          <a
+            href="https://tree-tools-brandingqr.pages.dev/?e=H&lt=SCAN%2520ME&at=1&tt=Please%2520scan%2520QRcode&ts=20">このデザインを作る</a>
         </div>
       </div>
 
       <div class="cta">
         <h2>あなたのオリジナルデザインを作成しましょう！</h2>
-        <p>QRコードのデザインを自由にカスタマイズできます。おしゃれなQRコードを作ってみましょう！</p>
-        <a href="qr-generator.html" class="button" style="font-size: 18px; padding: 10px 20px;">QRコードを作成する</a>
+        <p>
+          QRコードのデザインを自由にカスタマイズできます。<br>
+          おしゃれなQRコードを作ってみましょう！
+        </p>
       </div>
 
     </main>
@@ -62,7 +123,6 @@
   </div>
 
   <div data-include="/includes/footer.html"></div>
-
 </body>
 
 </html>
@@ -72,22 +132,26 @@
 デザイン：単色の変更
 QRコード：グリーン（#009E60）
 背景色：ホワイト（#FFFFFF）
+https://tree-tools-brandingqr.pages.dev/?dc=009e60
 
 2. グラデーションQRコード
 デザイン：グラデーション（左から右へ）
 開始色：ブルー（#007AFF）
 終了色：パープル（#8E44AD）
 背景色：ホワイト（#FFFFFF）
+https://tree-tools-brandingqr.pages.dev/?dc=007aff&ig=1&gc=8e44ad&gr=0
 
-3. 透過背景QRコード（ダークモード対応）
+3. 透過背景QRコード
 デザイン：背景透過
-QRコード：ホワイト（#FFFFFF）
+QRコード：ブラック（#000000）
 背景色：なし（透過PNG）
+https://tree-tools-brandingqr.pages.dev/?tb=1
 
 4. ドット形状変更（丸型）
 デザイン：ドットを丸型に変更
 QRコード：オレンジ（#FF5733）
 背景色：ホワイト（#FFFFFF）
+https://tree-tools-brandingqr.pages.dev/?dc=ff5733&ds=dots
 
 5. ロゴ付きQRコード
 デザイン：中央にロゴを挿入
@@ -100,10 +164,11 @@ QRコード：ブラック（#000000）
 QRコード：ブラック（#000000）
 背景色：ホワイト（#FFFFFF）
 テキスト：「SCAN ME」（#FF0000）
+https://tree-tools-brandingqr.pages.dev/?e=H&al=tx&lt=SCAN%2520ME&ls=19&lf=pg&lh=1.1&lc=000000
 
-7. QRコード下に画像を配置
-デザイン：QRコードの下に小さな画像を追加
+7. QRコード下にタイトルを配置
+デザイン：QRコードの下にタイトルを追加
 QRコード：ブラック（#000000）
 背景色：ホワイト（#FFFFFF）
-追加画像：ブランドロゴやアイコン
+https://tree-tools-brandingqr.pages.dev/?e=H&lt=SCAN%2520ME&at=1&tt=Please%2520scan%2520QRcode&ts=20
  -->
