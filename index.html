@@ -3,21 +3,32 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QRコードでブランディング｜ロゴ入りQR作成ツール - BrandingQRcode</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>ブランディングQRコードを作成 | ロゴ入り無料QR作成ツール - BrandingQRcode</title>
 
-  <meta name="description" content="BrandingQRcodeは、QRコードを使ったブランディングを実現する無料ツール。ロゴ入りQRコードを簡単に作成し、ブランドイメージを強化できます。">
+  <meta name="description" content="ロゴ入りQRコードを無料で簡単に作成できるツール。QRコードでブランドイメージを強化したい方におすすめです。">
   <meta name="keywords" content="QRコード, QRコード作成, カスタマイズQR, ブランドQR, デザインQR, QRジェネレーター, ブランディング">
   <meta name="author" content="BrandingQRcode">
+  <meta name="robots" content="index, follow">
 
   <meta property="og:title" content="QRコードでブランディング | ロゴ入りQR作成ツール - BrandingQRcode">
   <meta property="og:description" content="ロゴ入りQRコードを無料で作成し、ブランドを強化するツール。QRコードによるブランディングに最適です。">
   <meta property="og:site_name" content="BrandingQRcode">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tree-tools-brandingqr.pages.dev/">
+  <meta property="og:image" content="https://tree-tools-brandingqr.pages.dev/assets/images/site-icon-color.png">
+
+  <link rel="canonical" href="https://tree-tools-brandingqr.pages.dev/">
 
   <!-- 共通JS,CSS -->
   <script src="/assets/js/common.js"></script>
   <script src="/assets/js/includes.js"></script>
   <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- favicon -->
+  <link rel="icon" href="https://tree-tools-brandingqr.pages.dev/assets/images/site-icon-color.png" type="image/x-icon">
+  <!-- 広告 -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6247585947417000"
+    crossorigin="anonymous"></script>
 
   <!-- QRコード用JS -->
   <script src="/assets/js/qr-reader.js" defer></script>
@@ -37,18 +48,89 @@
 
   <div class="background">
     <div class="main-content">
-      <h1>QRコードでブランディング｜BrandingQRcode</h1>
+      <h1>ブランディングQRコードを作成｜BrandingQRcode</h1>
       <div class="input-group">
+        <input type="text" id="urlType" class="hidden">
 
-        <div class="input-button-container">
-          <input type="text" id="data" value="https://tree-tools-brandingqr.pages.dev/" placeholder="URLを入力">
+        <!-- URLかを選択 -->
+        <div class="typeSelect">
+          <label>
+            <input type="radio" name="typeSelect" value="url" checked>
+            URL
+          </label>
+          <label>
+            <input type="radio" name="typeSelect" value="custom">
+            URL以外
+          </label>
+        </div>
+        <!-- URL以外の詳細形式 -->
+        <div class="form-group hidden" id="customTypeGroup">
+          <label for="customTypeSelect">詳細形式</label>
+          <select id="customTypeSelect">
+            <option value="">--選択してください--</option>
+            <option value="line">LINE（個人・グループ・公式）</option>
+            <option value="wifi">Wi-Fi接続</option>
+            <option value="paypay">PayPay送金</option>
+          </select>
+        </div>
+        <!-- URL形式入力 -->
+        <div class="input-group-url">
+          <div class="input-button-container" id="urlInputGroup">
+            <label for="urlInput">URLを入力</label>
+            <input type="text" id="urlInput" placeholder="URLを入力">
+          </div>
+        </div>
+        <!-- LINE用入力 -->
+        <div class="input-group-url hidden" id="lineInputGroup">
+          <div class="form-group">
+            <label for="lineType">LINEの種類</label>
+            <select id="lineType">
+              <option value="person">個人（LINE ID）</option>
+              <option value="group">グループ（招待リンク）</option>
+              <option value="official">公式アカウント</option>
+            </select>
+          </div>
+          <div class="input-button-container">
+            <label for="lineId">LINE ID</label>
+            <input type="text" id="lineId" placeholder="例：name123">
+          </div>
+        </div>
+        <!-- Wi-Fi用入力 -->
+        <div class="input-group-url hidden" id="wifiInputGroup">
+          <div class="input-button-container">
+            <label>SSID：</label>
+            <input type="text" id="wifiSsid">
+          </div>
+          <div class="input-button-container">
+            <label>パスワード</label>
+            <input type="text" id="wifiPass">
+          </div>
+          <div class="form-group">
+            <label>セキュリティ</label>
+            <select id="wifiSecurity">
+              <option value="WPA">WPA/WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">なし</option>
+            </select>
+          </div>
+        </div>
+        <!-- PayPay用入力 -->
+        <div class="input-group-url hidden" id="paypayInputGroup">
+          <div class="input-button-container">
+            <label for="paypayId">PayPay ID</label>
+            <input type="text" id="paypayId" placeholder="例：name123">
+          </div>
         </div>
 
+        <!-- <div class="input-button-container">
+          <input type="text" id="data" value="https://tree-tools-brandingqr.pages.dev/" placeholder="URLを入力">
+        </div> -->
+        <br>
+        <p id="errorMessage"></p>
         <button class="clear-button" onclick="clearInput()">URLをクリア</button>
-
-        <button class="clear-button" onclick="togglePopup(getEle('settingsPopup'), true)">画像の詳細設定</button>
-        <button class="generate-button" onclick="generateQRCode()">QRコード生成</button>
-        <span id="errorMessage"></span>
+        <button class="clear-button" onclick="togglePopup(getEle('settingsPopup'), true)">画像の詳細設定</button><br><br>
+        <button class="clear-button" onclick="generateQRCode('sample')">サンプルを生成</button>
+        <button class="generate-button" onclick="generateQRCode('top')">QRコード生成</button>
       </div>
 
       <!-- 詳細設定のポップアップ -->
@@ -216,7 +298,7 @@
                     <input type="file" id="logoImage" accept="image/*">
                   </div>
                   <div class="preview-content">
-                    <img id="preview"> <!-- プレビュー画面 -->
+                    <img id="preview" alt="ロゴ画像挿入QRコード"> <!-- プレビュー画面 -->
                     <button id="cropButton">ロゴ作成</button>
                     <canvas id="croppedCanvas"></canvas>
                     <div id="qrCode"></div>
@@ -273,8 +355,10 @@
               </div>
             </div>
           </div>
+          <p id="detailErrorMessage"></p>
           <button onclick="clearDetails()" class="clear-button">詳細条件をクリア</button>
-          <button class="generate-button" onclick="generateQRCode()">QRコード生成</button>
+          <button class="clear-button" onclick="generateQRCode('sample')">サンプルを生成</button>
+          <button class="generate-button" onclick="generateQRCode('detail')">QRコード生成</button>
         </div>
       </div>
 
@@ -287,7 +371,31 @@
       </div>
     </div>
 
+    <!-- body内に広告表示位置 -->
+    <!-- 横長ノーマル -->
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6247585947417000" data-ad-slot="9719436679"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
     <div data-include="/includes/links.html"></div>
+  </div>
+
+  <!-- 規約ポップアップ -->
+  <div id="termsModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h2>【アップロード画像の利用に関する規約】</h2>
+      <div class="terms-text">
+        <ul>
+          <li>ユーザーが本サイトにアップロードする画像・ロゴ・アイコン等の素材に関するすべての権利（著作権、商標権、肖像権等）は、ユーザー自身の責任において確認・管理されるものとします</li>
+          <li>当サイト運営者は、アップロード素材の使用に起因するトラブル、第三者との紛争、損害について一切の責任を負いません</li>
+          <li>アップロード素材を使用して生成されたロゴについても、同様にユーザーの責任でご利用ください</li>
+        </ul>
+      </div>
+      <button id="agreeBtn">同意して進む</button>
+      <button id="closeModalBtn">キャンセル</button>
+    </div>
   </div>
 
   <div class="popup hidden" id="popup" onclick="togglePopup(getEle('popup'), false)">

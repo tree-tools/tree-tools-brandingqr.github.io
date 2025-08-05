@@ -5,12 +5,6 @@
   <meta charset="UTF-8">
   <title>QRコード作成フォーム</title>
 
-  <style>
-    .typeSelect {
-      font-size: 20px;
-    }
-  </style>
-
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
@@ -91,88 +85,85 @@
           </div>
         </div>
 
-        <button onclick="generate()">生成</button>
-
-        <div id="output" class="hidden">
-          生成された文字列：<br>
-          <code id="resultText"></code>
-        </div>
       </div>
-
-
     </div>
+
+
+  </div>
   </div>
 
   <script>
-    const customTypeGroup = document.getElementById('customTypeGroup');
-    const customTypeSelect = document.getElementById('customTypeSelect');
-    const urlInputGroup = document.getElementById('urlInputGroup');
 
-    const lineInputGroup = document.getElementById('lineInputGroup');
-    const wifiInputGroup = document.getElementById('wifiInputGroup');
-    const paypayInputGroup = document.getElementById('paypayInputGroup');
+    // 要素を取得する関数
+    function getEle(id) {
+      return document.getElementById(id);
+    }
 
-    const output = document.getElementById('output');
-    const resultText = document.getElementById('resultText');
+    // URL入力の切り替え
+    const customTypeGroup = getEle('customTypeGroup');
+    const customTypeSelect = getEle('customTypeSelect');　//
+    const urlInputGroup = getEle('urlInputGroup');
+    const lineInputGroup = getEle('lineInputGroup');
+    const wifiInputGroup = getEle('wifiInputGroup');
+    const paypayInputGroup = getEle('paypayInputGroup');
 
-    // ラジオボタンにイベントを追加
-    const typeRadios = document.querySelectorAll('input[name="typeSelect"]');
-    typeRadios.forEach(radio => {
+    function hideGroups(...groups) {
+      groups.forEach(g => g.classList.add('hidden'));
+    }
+
+    function showGroup(group) {
+      group.classList.remove('hidden');
+    }
+
+    // ラジオボタン切り替え
+    document.querySelectorAll('input[name="typeSelect"]').forEach(radio => {
       radio.addEventListener('change', () => {
         const isCustom = radio.value === 'custom';
         customTypeGroup.classList.toggle('hidden', !isCustom);
         urlInputGroup.classList.toggle('hidden', isCustom);
+
         if (!isCustom) {
-          lineInputGroup.classList.add('hidden');
-          wifiInputGroup.classList.add('hidden');
-          paypayInputGroup.classList.add('hidden');
+          hideGroups(lineInputGroup, wifiInputGroup, paypayInputGroup);
         }
       });
     });
 
-    // カスタム形式の詳細変更イベント
+    // カスタムタイプ変更
     customTypeSelect.addEventListener('change', () => {
-      lineInputGroup.classList.add('hidden');
-      wifiInputGroup.classList.add('hidden');
-      paypayInputGroup.classList.add('hidden');
-      if (customTypeSelect.value === 'line') lineInputGroup.classList.remove('hidden');
-      if (customTypeSelect.value === 'wifi') wifiInputGroup.classList.remove('hidden');
-      if (customTypeSelect.value === 'paypay') paypayInputGroup.classList.remove('hidden');
+      hideGroups(lineInputGroup, wifiInputGroup, paypayInputGroup);
+      const map = {
+        line: lineInputGroup,
+        wifi: wifiInputGroup,
+        paypay: paypayInputGroup
+      };
+      if (map[customTypeSelect.value]) {
+        showGroup(map[customTypeSelect.value]);
+      }
     });
-
-
 
     // 生成処理
     function generate() {
       let result = '';
       const selectedType = document.querySelector('input[name="typeSelect"]:checked').value;
-
       if (selectedType === 'url') {
-        result = document.getElementById('urlInput').value.trim();
+        result = getEle('urlInput').value.trim(); // 通常URL
       } else {
         const customType = customTypeSelect.value;
-        if (customType === 'line') {
-          const lineType = document.getElementById('lineType').value;
-          const id = document.getElementById('lineId').value.trim();
-          if (lineType === 'person') result = `https://line.me/ti/p/${id}`;
-          if (lineType === 'group') result = id;
-          if (lineType === 'official') result = `https://page.line.me/${id}`;
-        } else if (customType === 'wifi') {
-          const ssid = document.getElementById('wifiSsid').value;
-          const pass = document.getElementById('wifiPass').value;
-          const sec = document.getElementById('wifiSecurity').value;
+        if (customType === 'line') { // LINE パラメータlineId person, group, official
+          const lineType = getEle('lineType').value;
+          const id = getEle('lineId').value.trim();
+          result = lineType === 'person' ? `https://line.me/ti/p/${id}` :
+            lineType === 'group' ? id :
+              lineType === 'official' ? `https://page.line.me/${id}` : '';
+        } else if (customType === 'wifi') { // Wi-Fi パラメータ wifi
+          const ssid = getEle('wifiSsid').value;
+          const pass = getEle('wifiPass').value;
+          const sec = getEle('wifiSecurity').value;
           result = `WIFI:S=${ssid};T=${sec};P=${pass};;`;
-        } else if (customType === 'paypay') {
-          const paypayId = document.getElementById('paypayId').value.trim();
+        } else if (customType === 'paypay') { // PayPay パラメータ paypay
+          const paypayId = getEle('paypayId').value.trim();
           result = `https://paypay.me/${paypayId}`;
         }
-      }
-
-      // resultをdataに入れる
-
-      if (result) {
-        output.classList.remove('hidden');
-        resultText.textContent = result;
       }
     }
 
