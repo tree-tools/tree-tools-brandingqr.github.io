@@ -84,7 +84,7 @@ main {
     max-width: 560px;
     width: 100%;
     text-align: center;
-    padding: 20px;
+    padding: 20px 0;
     margin: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
@@ -617,7 +617,7 @@ button {
 
     .input-button-container input {
         max-width: none;
-        width: 95%;
+        width: 90%;
         margin-left: 20px;
         margin-right: 0;
     }
@@ -771,8 +771,10 @@ button {
 
 .links {
     text-align: center;
-    width: 600px;
+    width: 100%;
+    max-width: 560px;
 }
+
 
 .links a {
     display: block;
