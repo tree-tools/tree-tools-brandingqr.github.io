@@ -855,3 +855,50 @@ button {
     text-align: center;
     margin-top: 30px;
 }
+
+@media (min-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ↓広告 */
+.ad-top {
+    margin: 16px 0;
+    max-width: 560px;
+    width: 100%;
+    /* text-align: center; */
+}
+
+.ad-top>* {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.ad-content {
+    margin: 16px 0;
+    max-width: 560px;
+    width: 100%;
+    /* text-align: center; */
+}
+
+.ad-bottom {
+    margin: 16px 0;
+    max-width: 560px;
+    width: 100%;
+    /* text-align: center; */
+}
+
+.ad-bottom>* {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.ad-section {
+    text-align: center;
+}
+
+
+/* ↑広告 */
