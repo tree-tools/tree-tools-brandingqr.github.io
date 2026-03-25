@@ -360,13 +360,14 @@ button {
     background: white;
     width: 80%;
     max-width: 600px;
-    max-height: 90vh;
+    height: 90vh;
     padding: 15px 40px;
     border-radius: 8px;
     position: fixed;
     overflow: hidden;
     z-index: 11;
-    top: 20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .popup-content h2 {
@@ -375,16 +376,27 @@ button {
 
 /* スクロール可能にする */
 .popup-scroll {
-    max-height: 70vh;
+    height: 70vh;
     overflow-y: auto;
     margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+    .popup-content {
+        width: 90%;
+        padding: 15px 10px;
+        height: 80vh;
+    }
+    .popup-scroll{
+        height: 60vh;
+    }
 }
 
 /* 閉じるボタン */
 .close-btn {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 0;
     width: 100px;
     border: none;
     background: none;
@@ -625,6 +637,7 @@ button {
     .form-group {
         flex-direction: column;
         align-items: flex-start;
+        padding: 8px 0;
     }
 
     .form-group label {
