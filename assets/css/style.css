@@ -878,39 +878,54 @@ button {
 /* ↓広告 */
 .ad-top {
     margin: 16px 0;
-    max-width: 560px;
-    width: 100%;
+    /* max-width: 560px;
+    width: 100%; */
+
     /* text-align: center; */
 }
 
-.ad-top>* {
+/* .ad-top>* {
     display: block;
     max-width: 100%;
     margin: 0 auto;
-}
+} */
 
 .ad-content {
     margin: 16px 0;
-    max-width: 560px;
-    width: 100%;
+    /* max-width: 560px;
+    width: 100%; */
+
     /* text-align: center; */
 }
 
 .ad-bottom {
     margin: 16px 0;
-    max-width: 560px;
-    width: 100%;
+
+    /* max-width: 560px;
+    width: 100%; */
     /* text-align: center; */
 }
 
-.ad-bottom>* {
+/* .ad-bottom>* {
     display: block;
     max-width: 100%;
     margin: 0 auto;
+} */
+
+/* .ad-section {
+    text-align: center;
+} */
+
+
+.ad-top {
+  margin: 16px 0;
 }
 
-.ad-section {
-    text-align: center;
+.ad-inner {
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 
